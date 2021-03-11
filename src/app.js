@@ -67,7 +67,7 @@ app.get('/weather', (req, res) => {
             res.send({
                 address: req.query.address,
                 location: name,
-                forecast: forecast + '. It is currently ' + temperature + ' degress with ' + rain_chance + '% of rain.'
+                forecast
         
             })
         });

@@ -14,10 +14,9 @@ const forecast = (latitude, longitude, callback) => {
         else {
             
             callback(undefined, {
-                forecast: body.current.weather_descriptions[0],
-                temperature: body.current.temperature,
+                forecast: body.current.weather_descriptions[0] + '. It is currently ' + body.current.temperature + ' degress with ' + body.current.precip + '% of rain.' +
+                `Wind speeds of ${body.current.wind_speed} miles per hour`,
                 feel_temperature: body.current.feelslike,
-                rain_chance: body.current.precip
             })    
         }
     })
