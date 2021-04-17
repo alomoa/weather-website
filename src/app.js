@@ -43,36 +43,53 @@ app.get('/help', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    if(!req.query.address){
+    if(!req.query.address && !req.query.latitude){
         return res.send({
             error: 'Address must be provided'
         })
     }
     
-    geocode(req.query.address, (error, {latitude, longitude, name} = {}) =>{
-        if(error){
-            return res.send({
-                error
-            })
-        }
-        
-        forecast(latitude,longitude, (error, {forecast, temperature, rain_chance}) => {
+    if(req.query.address){
+        return geocode(req.query.address, (error, {latitude, longitude, name} = {}) =>{
+            console.log('name', name);
             if(error){
                 return res.send({
                     error
                 })
             }
-    
-         
-            res.send({
-                address: req.query.address,
-                location: name,
-                forecast
+            
+            forecast(latitude,longitude, (error, {forecast, temperature, rain_chance}) => {
+                if(error){
+                    return res.send({
+                        error
+                    })
+                }
         
-            })
+             
+                res.send({
+                    address: req.query.address,
+                    location: name,
+                    forecast
+            
+                })
+            });
         });
-    });
 
+    }
+    
+    forecast(req.query.latitude, req.query.longitude, (error, {forecast, temperature, rain_chance, location}) => {
+        if(error){
+            return res.send({
+                error
+            })
+        }
+
+        
+        res.send({
+            location,
+            forecast
+        })
+    });
     
 })
 

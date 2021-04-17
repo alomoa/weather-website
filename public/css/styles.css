@@ -54,3 +54,7 @@ button{
     padding: 8px;
 
 }
+
+#geolocate_button{
+    margin-top: 4px
+}
